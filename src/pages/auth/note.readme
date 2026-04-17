@@ -1,0 +1,47 @@
+  //   <div className={style.wrapper}>
+  //     <div className={style.bg}>
+  //     {/* <FloatingLines
+  //       enabledWaves={["top","middle","bottom"]}
+
+  //       lineCount={[6,6,6]}
+  //       lineDistance={[6,6,6]}
+
+  //       bendRadius={55}
+  //       bendStrength={-8}
+
+  //       interactive={true}
+  //       parallax={true}
+
+  //       linesGradient={["#00f5ff","#ff00ff"]}
+
+  //       topWavePosition={{ x: -1, y: 0.8  }}
+  //       middleWavePosition={{ x: 0, y: 0  }}
+  //     /> */}
+  // </div>
+  //   <div className={style.register}>
+  //     <div className={style.container}>
+
+  //     <div>
+  //       <h1 className={style.title}>Halaman Register</h1>
+
+  //       <form action="" className={style.form}>
+
+  //         <input type="text" placeholder='Nama' className={style.input} />
+  //         <input type="email" placeholder='Email' className={style.input} />
+  //         <input type="password" placeholder='Password' className={style.input} />
+  //         <button type='submit' className={style.button}>Register</button>
+
+  //       </form>
+  //       <div className={style.textContainer}>
+  //       <p className={style.text}>
+  //         Sudah punya akun?{' '}
+  //         <Link className={style.link} href="/auth/login">
+  //           Login
+  //         </Link>
+  //       </p>
+  //       </div>
+  //     </div>
+
+  //     </div>
+  //   </div>
+  //   </div>

@@ -1,5 +1,5 @@
 // Next.js API route Support: https://nextjs.org/docs/api-routes/introduction
-import { signUp } from "@/utlis/db/servicefirebase";
+import { signUp } from "@/utils/db/servicefirebase";
 import type { NextApiRequest, NextApiResponse } from "next";
 
 type Data = {

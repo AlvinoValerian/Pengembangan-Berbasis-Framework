@@ -1,10 +1,5 @@
-import { useRouter } from "next/router";
-import { useState } from "react";
-import useSWR from "swr";
-import fetcher from "../../utlis/swr/fetcher";
-import TampilkanProduk from "../../views/product";
-import DetailProduk from "@/views/DetailProduct";
 import { ProductType } from "@/type/product.type";
+import DetailProduk from "@/views/DetailProduct";
 
 const HalamanProduk = ({product}:{product: ProductType}) => {
     {/digunakan untuk-client side rendering/}

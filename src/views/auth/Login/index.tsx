@@ -1,31 +1,93 @@
-import React from 'react'
-import Link from 'next/link'
-import { useRouter } from 'next/router'
-// import styles from './login.module.css';
-import styles from './login.module.scss';
+import Link from "next/link";
+import styles from "../../auth/Login/login.module.scss";
+import { useState } from "react";
+import { useRouter } from "next/router";
+import { signIn } from "next-auth/react";
 
 const TampilanLogin = () => {
-  const {push} = useRouter();
-  const handlerLogin = () => {
-    //logic login disini
-    localStorage.setItem("isLogin","true");
-    push('/produk');
-  }
-    const handlerLogout = () => {
-      localStorage.removeItem("isLogin");
-      push("/auth/login");
+  const [isLoading, setIsLoading] = useState(false);
+  const { push, query } = useRouter();
+
+  const callbackUrl: any = query.callbackUrl || "/";
+  const [error, setError] = useState("");
+
+  const handleSubmit = async (event: any) => {
+    event.preventDefault();
+    setError("");
+    setIsLoading(true);
+
+    try {
+    const res = await signIn("credentials", {
+      redirect: false,
+      email: event.target.email.value,
+      password: event.target.password.value,
+      callbackUrl,
+    });
+
+    if (!res?.error) {
+      setIsLoading(false);
+      push(callbackUrl);
+    } else {
+      setIsLoading(false);
+      setError(res?.error || "Login failed");
     }
-    return (
+  } catch (error) {
+    setIsLoading(false);
+    setError("Wrong email or password");
+  }
+};
+
+  return (
+    <>
     <div className={styles.login}>
-        <h1 className='text-3xl font-bold text-blue-600'>Halaman Login</h1><br />
-        {/* <button onClick={handlerLogin}>Login</button><br />
-        <button onClick={() => push('/produk')}>Login</button><br /> */}
-        <button onClick={() => handlerLogin()}>Login</button><br />
-        {/* <button onClick={() => handlerLogout()}>Logout</button><br /> */}
-        <h1 style={{ color:"red",border:"1px solid red", borderRadius:"5px",padding:"5px" }}>belum punya akun</h1>
-        <Link href="/auth/register">Ke Halaman Register</Link>
+      {error && <p className={styles.login__error}>{error}</p>}
+      <h1 className={styles.login__title}>Halaman login</h1>
+      <div className={styles.login__form}>
+        <form onSubmit={handleSubmit}>
+        
+      <div className={styles.login__form__item}>
+        <label htmlFor="email" className={styles.login__form__item__label}>
+          Email
+        </label>
+        <input 
+        type="email"
+        id="email"
+        name="email"
+        placeholder="email"
+        className={styles.login__form__item__input} />
+      </div>
+
+      <div className={styles.login__form__item}>
+        <label htmlFor="Password" className={styles.login__form__item__label}>
+          Password
+        </label>
+        <input 
+        type="password"
+        id="password"
+        name="password"
+        placeholder="Password"
+        className={styles.login__form__item__input} />
+      </div>
+
+      <button 
+      type="submit" 
+      className={styles.login__form__item__button}
+      disabled={isLoading}
+      >
+        {isLoading ? "Loading..." : "login"}
+      </button>
+
+      </form>
+        <br />
+
+        <p className={styles.login__form__item__text}>
+          Sudah punya akun? <Link href="/auth/register">Ke Halaman Register</Link>
+        </p>
+        
+      </div>
     </div>
-  )
-}
+    </>
+  );
+};
 
 export default TampilanLogin;

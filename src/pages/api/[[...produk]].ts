@@ -1,11 +1,11 @@
 
 import type { NextApiRequest, NextApiResponse } from "next";
-// import { retriveProducts } from "../../utlis/db/servicefirebase";
+// import { retriveProducts } from "../../utils/db/servicefirebase";
 
 import {
     retrieveDataByID,
-    retriveProducts,
-} from "../../utlis/db/servicefirebase";
+    retrieveProducts,
+} from "../../utils/db/servicefirebase";
 
 type Data = {
     status: boolean;
@@ -49,7 +49,7 @@ export default async function handler(
             res.status(200).json({status:true,status_code:200,data});
             return;
         }else{
-            const data = await retriveProducts("products");
+            const data = await retrieveProducts("products");
             res.status(200).json({status:true,status_code:200,data});
         }
     };

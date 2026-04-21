@@ -8,12 +8,14 @@ import {
   query,
   addDoc,
   where,
+  updateDoc,
 } from "firebase/firestore";
 import app from "./firebase";
 import bcrypt from "bcrypt";
 import { MessageChannel } from "worker_threads";
 import { divide } from "firebase/firestore/pipelines";
 import { Elsie } from "next/font/google";
+
 
 const db = getFirestore(app);
 
@@ -89,4 +91,50 @@ export async function signUp(
     });
   });
 }
+}
+
+export async function signInWithOAuth(userData: any) {
+  try {
+    const q = query(
+      collection(db, "users"),
+      where("email", "==", userData.email)
+    );
+
+    const querySnapshot = await getDocs(q);
+    const data: any = querySnapshot.docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+    }));
+
+    if (data.length > 0) {
+      userData.role = data[0].role;
+
+      await updateDoc(doc(db, "users", data[0].id), {
+        fullname: userData.fullname,
+        image: userData.image,
+        type: userData.type,
+      });
+
+      return {
+        status: true,
+        message: `User login with ${userData.type}`,
+        data: userData,
+      };
+    } else {
+      userData.role = "member";
+
+      await addDoc(collection(db, "users"), userData);
+
+      return {
+        status: true,
+        message: `User registered with ${userData.type}`,
+        data: userData,
+      };
+    }
+  } catch (error: any) {
+    return {
+      status: false,
+      message: `Failed login with ${userData.type}`,
+    };
+  }
 }

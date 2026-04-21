@@ -14,6 +14,13 @@ const Navbar = () => {
                 <>
                 <div className={syles.navbar__user}>
                     Welcome, {data.user?.fullname}
+                    {data.user.image && (
+                        <img
+                        src={data.user.image}
+                        alt={data.user.fullname}
+                        className={syles.navbar__user__image}
+                        />
+                    )}
                 </div>
                 
                 <button 

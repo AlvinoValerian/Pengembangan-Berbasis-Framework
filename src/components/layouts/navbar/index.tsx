@@ -1,35 +1,44 @@
-import syles from './navbar.module.css';
+import Script from 'next/dist/client/script';
+import styles from './navbar.module.css';
 import { signIn, signOut, useSession } from 'next-auth/react';
+import Image from 'next/image';
 
 const Navbar = () => {
     const { data }:any = useSession()
     return (
-        <div className={syles.navbar}>
-            <div className={syles.navbar__brand}>
+        <div className={styles.navbar}>
+            {/* <div className={styles.navbar__brand}>
                 My App
-            </div>
+            </div> */}
 
-            <div className={syles.navbar__right}>
+            <div className={styles.navbar__brand} id="title"></div>
+                <Script id="title-script" strategy="lazyOnload">
+                    {`document.getElementById('title').innerHTML = 'My App';`}
+                </Script>
+
+
+            <div className={styles.navbar__right}>
             {data ? (
                 <>
-                <div className={syles.navbar__user}>
+                <div className={styles.navbar__user}>
                     Welcome, {data.user?.fullname}
                     {data.user.image && (
-                        <img
+                        <Image
+                        width={50} height={50}
                         src={data.user.image}
                         alt={data.user.fullname}
-                        className={syles.navbar__user__image}
+                        className={styles.navbar__user__image}
                         />
                     )}
                 </div>
                 
                 <button 
-                className={`${syles.navbar__button} ${syles["navbar__button--danger"]}`}
+                className={`${styles.navbar__button} ${styles["navbar__button--danger"]}`}
                 onClick={() => signOut()}>Sign Out</button>
                 </>
             ) : (
                 <button 
-                className={`${syles.navbar__button} ${syles["navbar__button--primary"]}`}
+                className={`${styles.navbar__button} ${styles["navbar__button--primary"]}`}
                 onClick={() => signIn()}>Sign In</button>
                 )}
 

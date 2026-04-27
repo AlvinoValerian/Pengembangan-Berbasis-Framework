@@ -2,7 +2,12 @@ import { useRouter } from "next/router";
 import { useState } from "react";
 import useSWR from "swr";
 import fetcher from "../../utils/swr/fetcher";
-import TampilkanProduk from "../../views/product";
+// import TampilkanProduk from "../../views/product";
+import dynamic from "next/dynamic";
+
+const TampilkanProduk = dynamic(() => import("../../views/product"), {
+  loading: () => <p>Loading produk...</p>,
+});
 
 // const fetcher = (url: string) => fetch(url).then((res) => res.json());
 

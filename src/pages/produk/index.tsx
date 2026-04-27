@@ -11,17 +11,18 @@ const TampilkanProduk = dynamic(() => import("../../views/product"), {
 
 // const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
-const kategori = () => {
+const Kategori = () => {
     // const [products, setProducts] = useState([]);
     // const { data, error ,isLoading} = useSWR("/api/produk", fetcher);
-    const {push} = useRouter();
-    const [products, setProducts] = useState([]);
+
+    // const {push} = useRouter();
+    // const [products, setProducts] = useState([]);
     
     const { data, error ,isLoading} = useSWR("/api/produk", fetcher);
 
     return (
         <div>
-            <TampilkanProduk products={isLoading ? [] : data.data } />
+            <TampilkanProduk products={isLoading ? [] : data?.data || [] } />
         </div>
     );
 };
@@ -114,4 +115,4 @@ const kategori = () => {
     );
 } */}
 
-export default kategori;
+export default Kategori;
